@@ -1,11 +1,11 @@
-ZL.CommandCoreÄÜÎªÇ°¶ËÌá¹©Í³Ò»µÄ½Ó¿Úµ÷ÓÃ£¬Ä¿Ç°Ö§³Ö½Ó¿Ú»º´æ£¬½Ó¿ÚÊÚÈ¨
-## Ìí¼ÓÏîÄ¿ÒıÓÃ
+ZL.CommandCoreèƒ½ä¸ºå‰ç«¯æä¾›ç»Ÿä¸€çš„æ¥å£è°ƒç”¨ï¼Œç›®å‰æ”¯æŒæ¥å£ç¼“å­˜ï¼Œæ¥å£æˆæƒ
+## 1.æ·»åŠ é¡¹ç›®å¼•ç”¨
 
 ```
 Install-Package ZL.CommandCore
 ```
 
-## 1.³õÊ¼»¯ZL.CommandCore
+## 2.åˆå§‹åŒ–ZL.CommandCore
 
 ```
 public void ConfigureServices(IServiceCollection services)
@@ -17,11 +17,11 @@ public void ConfigureServices(IServiceCollection services)
     });
 
     //
-    //¶¯Ì¬Ìí¼Óµ±Ç°ÏîÄ¿ËùÓĞ½Ó¿ÚµÄÒÀÀµ×¢Èë
+    //åŠ¨æ€æ·»åŠ å½“å‰é¡¹ç›®æ‰€æœ‰æ¥å£çš„ä¾èµ–æ³¨å…¥
     //
     var assembly = typeof(Startup).Assembly;
 
-    //ÊµÏÖÁË½Ó¿ÚICommandBase½Ó¿ÚµÄÌí¼ÓÒÀÀµ×¢Èë
+    //å®ç°äº†æ¥å£ICommandBaseæ¥å£çš„æ·»åŠ ä¾èµ–æ³¨å…¥
     var types = assembly.ExportedTypes.Where(x => x.IsClass && x.IsPublic && x.GetInterface("ICommandBase") != null);
 
     foreach (var type in types)
@@ -32,24 +32,24 @@ public void ConfigureServices(IServiceCollection services)
 }
 ``` 
 
-## 2.½Ó¿Ú´´½¨
+## 3.æ¥å£åˆ›å»º
 
 ```
-//¶¨Òå½Ó¿Ú´«Èë²ÎÊı
+//å®šä¹‰æ¥å£ä¼ å…¥å‚æ•°
 public class Test1Parameter : IParameter
 {
-	//ÔÚ´Ë¶¨ÒåÊôĞÔ
+	//åœ¨æ­¤å®šä¹‰å±æ€§
 }
 
-//¶¨Òå½Ó¿Ú·µ»Ø½á¹û
+//å®šä¹‰æ¥å£è¿”å›ç»“æœ
 public class Test1Result: Result<string>
 {
 }
 
-//¶¨Òå½Ó¿Ú
+//å®šä¹‰æ¥å£
 public class Test1Command : Command<string>
 {
-	//½Ó¿ÚµÄ´¦ÀíÂß¼­
+	//æ¥å£çš„å¤„ç†é€»è¾‘
     protected override IResult<string> OnExecute(IParameter parameter)
     {
         Test1Parameter test1Parameter = parameter as Test1Parameter;
@@ -61,10 +61,10 @@ public class Test1Command : Command<string>
 }
 ```
 
-## 3.ÔÚ¿ØÖÆÆ÷ÖĞÉùÃ÷½Ó¿Ú
+## 4.åœ¨æ§åˆ¶å™¨ä¸­å£°æ˜æ¥å£
 
 ```
-[Route("api/test/[action]")]//ÉùÃû½Ó¿ÚµÄµ÷ÓÃµØÖ·
+[Route("api/test/[action]")]//å£°åæ¥å£çš„è°ƒç”¨åœ°å€
 [ApiController]
 public class TestController : ControllerBase
 {
@@ -74,7 +74,7 @@ public class TestController : ControllerBase
     }
 
     /// <summary>
-    /// ½Ó¿Úµ÷ÓÃÀı×Ó1
+    /// æ¥å£è°ƒç”¨ä¾‹å­1
     /// </summary>
     /// <param name="parameter"></param>
     /// <returns></returns>
@@ -87,16 +87,16 @@ public class TestController : ControllerBase
 }
 ```
 
-## 4.½Ó¿Ú»º´æ
-Ê¹ÓÃ½Ó¿Ú»º´æĞèÒª³õÊ¼»¯µÄÊ±ºòÖ¸¶¨Êı¾İ¿âÁ¬½Ó´®
+## 5.æ¥å£ç¼“å­˜
+ä½¿ç”¨æ¥å£ç¼“å­˜éœ€è¦åˆå§‹åŒ–çš„æ—¶å€™æŒ‡å®šæ•°æ®åº“è¿æ¥ä¸²
 ```
 services.AddCommand(opt => {
-	//Êı¾İ¿âÁ¬½ÓµØÖ·
+	//æ•°æ®åº“è¿æ¥åœ°å€
     opt.ConnectionString = "server=localhost;userid=root;password=123456;database=zl_command;";
     opt.ServiceKey = "DemoWeb1";
 });
 ```
-Ê¹ÓÃCacheAttributeÖ¸¶¨·½·¨Ê¹ÓÃ»º´æ
+ä½¿ç”¨CacheAttributeæŒ‡å®šæ–¹æ³•ä½¿ç”¨ç¼“å­˜
 ```
 [HttpPost, Cache(Key = "test1")]
 public Test1Result Test1(Test1Parameter parameter)
@@ -105,8 +105,8 @@ public Test1Result Test1(Test1Parameter parameter)
 }
 ```
 
-## 5.½Ó¿ÚÊÚÈ¨
-²ÎÊıĞèÒª¼Ì³ĞAuthorizationParameter£¬½Ó¿ÚĞèÒª¼Ì³ĞAuthorizationCommand
+## 6.æ¥å£æˆæƒ
+å‚æ•°éœ€è¦ç»§æ‰¿AuthorizationParameterï¼Œæ¥å£éœ€è¦ç»§æ‰¿AuthorizationCommand
 
 ```
 public class Test3Parameter : AuthorizationParameter
@@ -124,17 +124,17 @@ public class Test3Command : AuthorizationCommand<string>
         Test3Parameter test2Parameter = parameter as Test3Parameter;
 
         Test3Result result = new Test3Result() { };
-        //ÔÚ´ËÊµÏÖÏà¹ØµÄÒµÎñÂß¼­
+        //åœ¨æ­¤å®ç°ç›¸å…³çš„ä¸šåŠ¡é€»è¾‘
 
         return result;
     }
 }
 ```
-ÔÚ¿ØÖÆÆ÷ÓÃÊ¹ÓÃAuthorizationAttributeÊôĞÔ
+åœ¨æ§åˆ¶å™¨ç”¨ä½¿ç”¨AuthorizationAttributeå±æ€§
 
 ```
 /// <summary>
-/// ½Ó¿Úµ÷ÓÃÀı×Ó3£¨´øÊÚÈ¨¿ØÖÆ£©
+/// æ¥å£è°ƒç”¨ä¾‹å­3ï¼ˆå¸¦æˆæƒæ§åˆ¶ï¼‰
 /// </summary>
 /// <param name="parameter"></param>
 /// <returns></returns>
