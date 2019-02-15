@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
-    <AssemblyVersion>2.0.215.1</AssemblyVersion>
+    <AssemblyVersion>2.0.215.2</AssemblyVersion>
     <FileVersion>2.0.215.1</FileVersion>
     <Authors>wesking</Authors>
     <Company>zlan</Company>
@@ -10,7 +10,7 @@
     <Copyright>©2012-2019 ZLAN. All rights reserved.</Copyright>
     <PackageProjectUrl>https://github.com/wesking/ZL.CommandCore</PackageProjectUrl>
     <PackageLicenseUrl>https://opensource.org/licenses/Apache-2.0</PackageLicenseUrl>
-    <Version>2.0.215.1</Version>
+    <Version>2.0.215.2</Version>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
