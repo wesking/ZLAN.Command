@@ -1,4 +1,10 @@
-# ZL.CommandCore是基于dotnet core，旨在为前端提供统一的接口交互
+ZL.CommandCore是基于dotnet core，旨在为前端提供统一的接口交互
+## 添加项目引用
+
+```
+Install-Package ZL.CommandCore
+```
+
 ## 初始化ZL.CommandCore
 
 ```
