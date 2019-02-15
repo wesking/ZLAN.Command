@@ -1,0 +1,1 @@
+Scaffold-DbContext -force  "Server=192.168.2.64;User Id=administrator;Password=zlan2017;Database=zlan_core" "Pomelo.EntityFrameworkCore.MySql" -OutputDir "./Data" -Tables "svr_api_info","svr_app_authorization","svr_app_info","svr_app_service","svr_command_subscriber","svr_invoke_info","svr_invoke_log","svr_service_info" -Context "ServiceContext"
