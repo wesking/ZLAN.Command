@@ -1,11 +1,11 @@
-ZL.CommandCore是基于dotnet core，旨在为前端提供统一的接口交互
+ZL.CommandCore能为前端提供统一的接口调用，目前支持接口缓存，接口授权
 ## 添加项目引用
 
 ```
 Install-Package ZL.CommandCore
 ```
 
-## 初始化ZL.CommandCore
+## 1.初始化ZL.CommandCore
 
 ```
 public void ConfigureServices(IServiceCollection services)
@@ -32,7 +32,7 @@ public void ConfigureServices(IServiceCollection services)
 }
 ``` 
 
-## 接口创建
+## 2.接口创建
 
 ```
 //定义接口传入参数
@@ -61,7 +61,7 @@ public class Test1Command : Command<string>
 }
 ```
 
-## 在控制器中声明接口
+## 3.在控制器中声明接口
 
 ```
 [Route("api/test/[action]")]//声名接口的调用地址
@@ -87,7 +87,7 @@ public class TestController : ControllerBase
 }
 ```
 
-## 接口缓存
+## 4.接口缓存
 使用接口缓存需要初始化的时候指定数据库连接串
 ```
 services.AddCommand(opt => {
@@ -105,7 +105,7 @@ public Test1Result Test1(Test1Parameter parameter)
 }
 ```
 
-## 接口授权
+## 5.接口授权
 参数需要继承AuthorizationParameter，接口需要继承AuthorizationCommand
 
 ```
