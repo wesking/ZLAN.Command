@@ -19,7 +19,8 @@ namespace ZL.CommandCore
         public string Message { get; set; }
 
         public T Data { get; set; }
-        
+
+        public int Total { get; set; }
     }
     
 }
