@@ -1,50 +1,64 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using ZL.CommandCore.Abs;
 
 namespace ZL.CommandCore
 {
     public class ErrorResult<T>
     {
-        public static IResult<T> ParameterError
+        public static Result<T> GetErrorResult(int code, string message)
+        {
+            return new Result<T>()
+            {
+                Code = code,
+                Message = message
+            };
+        }
+
+        public static Result<T> ParameterError
         {
             get
             {
                 return new Result<T>()
                 {
-                    Code = 101,
+                    Code = 1,
                     Message = "param error"
                 };
             }
         }
 
-
-        public static IResult<T> NoAuthentication
+        public static Result<T> Exception(Exception ex)
         {
-            get
+            return new Result<T>()
             {
-                return new Result<T>()
-                {
-                    Code = 105,
-                    Message = "no authentication"
-                };
-            }
+                Code = 4,
+                Message = ex.Message
+            };
         }
 
-        public static IResult<T> NoAuthorization
+        public static Result<T> NoAuthorization
         {
             get
             {
                 return new Result<T>()
                 {
-                    Code = 106,
+                    Code = 5,
                     Message = "no authorization"
                 };
             }
         }
-        
 
-       
+
+        public static Result<T> SignatureError
+        {
+            get
+            {
+                return new Result<T>()
+                {
+                    Code = 6,
+                    Message = "signature error"
+                };
+            }
+        }
     }
 }

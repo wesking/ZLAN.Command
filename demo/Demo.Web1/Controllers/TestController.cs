@@ -46,11 +46,11 @@ namespace Demo.Web1.Controllers
 
 
         /// <summary>
-        /// 接口调用例子3
+        /// 接口调用例子3（带授权控制）
         /// </summary>
         /// <param name="parameter"></param>
         /// <returns></returns>
-        [HttpPost]
+        [HttpPost, Authorization]
         public Test3Result Test3(Test3Parameter parameter)
         {
             return _p.GetService<Test3Command>().Execute(parameter) as Test3Result;

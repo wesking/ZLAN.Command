@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Text;
 using ZL.CommandCore.Abs;
 using ZL.CommandCore.Abs.Observable;
+using ZL.CommandCore.Authorization;
+using ZL.CommandCore.Cachable;
 using ZL.CommandCore.Data;
 using ZL.CommandCore.Observable;
 
@@ -13,7 +15,7 @@ namespace ZL.CommandCore
 {
     public static class CommandBuilderExtensions
     {
-        public static void AddCommand(this IServiceCollection services, Action<CommandOptions> options)
+        public static IServiceCollection AddCommand(this IServiceCollection services, Action<CommandOptions> options)
         {
             //options.
             //InvokeContext.ConnectionString = options.ConnectionString;
@@ -25,6 +27,9 @@ namespace ZL.CommandCore
             services.AddMemoryCache();
             //设置接口依赖注入
 
+
+            services.AddTransient<CommandCacheExecutor>();
+
             services.AddDbContext<ServiceContext>(optionsBuilder => {
                 optionsBuilder.UseMySql(option.ConnectionString);
             });
@@ -33,6 +38,9 @@ namespace ZL.CommandCore
             
             //设置接口失败重试
             services.AddHostedService<InvokerHostedService>();
+
+            return services;
         }
+        
     }
 }

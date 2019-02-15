@@ -4,18 +4,19 @@ using System.Linq;
 using System.Threading.Tasks;
 using ZL.CommandCore;
 using ZL.CommandCore.Abs;
+using ZL.CommandCore.Authorization;
 
 namespace Demo.Web1.Commands
 {
 
-    public class Test3Parameter : IParameter
+    public class Test3Parameter : AuthorizationParameter
     {
     }
 
     public class Test3Result : Result<string>
     {
     }
-    public class Test3Command : Command<string>
+    public class Test3Command : AuthorizationCommand<string>
     {
 
         protected override IResult<string> OnExecute(IParameter parameter)
