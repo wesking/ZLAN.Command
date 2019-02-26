@@ -30,15 +30,18 @@ namespace ZL.CommandCore
 
             services.AddTransient<CommandCacheExecutor>();
 
+
             services.AddDbContext<ServiceContext>(optionsBuilder => {
                 optionsBuilder.UseMySql(option.ConnectionString);
             });
 
             ServiceContext.ConnectionString = option.ConnectionString;
-            
-            //设置接口失败重试
-            services.AddHostedService<InvokerHostedService>();
 
+            //设置接口失败重试
+            if (option.InvokerHostEnable)
+            {
+                services.AddHostedService<InvokerHostedService>();
+            }
             return services;
         }
         

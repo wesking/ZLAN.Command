@@ -9,5 +9,7 @@ namespace ZL.CommandCore
         public string ServiceKey { get; set; }
         
         public string ConnectionString { get; set; }
+
+        public bool InvokerHostEnable { get; set; } = false;
     }
 }

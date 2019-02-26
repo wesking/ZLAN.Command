@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Serilog;
 using System;
+using System.Diagnostics;
 using ZL.CommandCore.Abs;
 using ZL.CommandCore.Abs.Observable;
 
@@ -45,6 +46,7 @@ namespace ZL.CommandCore
         
         public IResult<T> Execute(IParameter parameter)
         {
+            var sw = Stopwatch.StartNew();
             IResult<T> result = PrepareExecute(parameter);
             if (result == null)
             {
@@ -55,26 +57,38 @@ namespace ZL.CommandCore
                     {
                         AfterExecute(parameter, result);
                     }
-
-                    var logMsg = "SUCCESS";
-                    if (result.Code != 0) {
-                        logMsg = JsonConvert.SerializeObject(result);
-                    }
-                    Log.Logger
-                        .ForContext("Command", this)
-                        .ForContext("Parameter", JsonConvert.SerializeObject(parameter))
-                        .Information(logMsg);
                 }
                 catch (Exception ex)
                 {
+                    sw.Stop();
                     Log.Logger
-                        .ForContext("Command", this)
+                        .ForContext("Command", this.GetType().Name)
+                        .ForContext("Elapsed", sw.Elapsed.TotalMilliseconds)
                         .ForContext("Parameter", JsonConvert.SerializeObject(parameter))
                         .Error(ex, ex.Message);
                     return new Result<T> { Code = 4, Message = ex.Message };
                 }
 
             }
+            sw.Stop();
+            
+            if (result.Code != 0)
+            {
+                Log.Logger
+                    .ForContext("Command", this.GetType().Name)
+                    .ForContext("Elapsed", sw.Elapsed.TotalMilliseconds)
+                    .ForContext("Parameter", JsonConvert.SerializeObject(parameter))
+                    .Error(JsonConvert.SerializeObject(result));
+            }
+            else
+            {
+                Log.Logger
+                    .ForContext("Command", this.GetType().Name)
+                    .ForContext("Elapsed", sw.Elapsed.TotalMilliseconds)
+                    .ForContext("Parameter", JsonConvert.SerializeObject(parameter))
+                    .Information("OK");
+            }
+
             return result;
         }
     }

@@ -105,6 +105,8 @@ namespace Demo.Web1
             app.UseCookiePolicy();
 
             app.UseMvc();
+
+            Log.Logger.Information("test");
         }
     }
 }
