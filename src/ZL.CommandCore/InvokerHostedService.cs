@@ -50,7 +50,7 @@ namespace ZL.CommandCore
                     new HttpInvoker<object>().Invoke(id);
                 }
 
-                Thread.Sleep(300);
+                Thread.Sleep(10000);
             }
         }
 

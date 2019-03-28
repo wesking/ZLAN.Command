@@ -88,7 +88,7 @@ namespace ZL.CommandCore
 
                         log.ResponseTime = timeSpan;
                         log.ResponseData = response.Content.ReadAsStringAsync().Result;
-                        result = JsonConvert.DeserializeObject<IResult<T>>(log.ResponseData);
+                        result = JsonConvert.DeserializeObject<Result<T>>(log.ResponseData);
                     }
                     catch (Exception ex)
                     {
@@ -149,7 +149,7 @@ namespace ZL.CommandCore
             //计算签名
             var md5 = MD5.Create();
             var inputByte = Encoding.UTF8.GetBytes(string.Format("service={0}&appid={1}&data={2}&nonce={3}&appsecret={4}",
-(object)info.Service, (object)info.Appid, requestBody, nonce, app.AppSecret));
+ info.Service, info.Appid, requestBody, nonce, app.AppSecret));
             var outputByte = md5.ComputeHash(inputByte);
 
             var sign = BitConverter.ToString(outputByte).Replace("-", "").ToUpper();

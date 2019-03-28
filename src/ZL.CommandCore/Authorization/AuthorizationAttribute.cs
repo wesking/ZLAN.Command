@@ -91,7 +91,7 @@ namespace ZL.CommandCore.Authorization
                     service, appid, data, nonce, getAppAuthorizationResult.Data.Appsecret);
 
                 var md5 = System.Security.Cryptography.MD5.Create();
-                var hashBytes = md5.ComputeHash(Encoding.UTF8.GetBytes(data));
+                var hashBytes = md5.ComputeHash(Encoding.UTF8.GetBytes(rawString));
 
                 var signCheck = BitConverter.ToString(hashBytes).Replace("-", "").ToUpper();
 
@@ -134,11 +134,11 @@ namespace ZL.CommandCore.Authorization
                 contraint = (auth.Principal.Identity as ClaimsIdentity).Claims.FirstOrDefault().Value;
             }
 
-            if (string.IsNullOrEmpty(contraint))
-            {
-                context.Result = new ObjectResult(ErrorResult<int>.NoAuthorization);
-                return;
-            }
+            //if (string.IsNullOrEmpty(contraint))
+            //{
+            //    context.Result = new ObjectResult(ErrorResult<int>.NoAuthorization);
+            //    return;
+            //}
 
             IParameter parameter = null;
             if (context.ActionArguments.Count() == 1 && context.ActionArguments.First().Value is IParameter)
