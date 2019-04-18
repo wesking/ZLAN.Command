@@ -124,21 +124,19 @@ namespace ZL.CommandCore.Authorization
 
             if ((IdentityMode == IdentityMode.Hybird || IdentityMode == IdentityMode.Cookies) && string.IsNullOrEmpty(appid))
             {
-                var auth = await controller.HttpContext.AuthenticateAsync(Scheme);
-                if (!auth.Succeeded)
+                contraint = request.Headers["Identity"].FirstOrDefault();
+                if (string.IsNullOrEmpty(contraint))
                 {
-                    context.Result = new ObjectResult(ErrorResult<int>.NoAuthorization);
-                    return;
+                    var auth = await controller.HttpContext.AuthenticateAsync(Scheme);
+                    if (!auth.Succeeded)
+                    {
+                        context.Result = new ObjectResult(ErrorResult<int>.NoAuthorization);
+                        return;
+                    }
+
+                    contraint = (auth.Principal.Identity as ClaimsIdentity).Claims.FirstOrDefault().Value;
                 }
-
-                contraint = (auth.Principal.Identity as ClaimsIdentity).Claims.FirstOrDefault().Value;
             }
-
-            //if (string.IsNullOrEmpty(contraint))
-            //{
-            //    context.Result = new ObjectResult(ErrorResult<int>.NoAuthorization);
-            //    return;
-            //}
 
             IParameter parameter = null;
             if (context.ActionArguments.Count() == 1 && context.ActionArguments.First().Value is IParameter)
