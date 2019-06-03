@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using ZL.CommandCore;
-using ZL.CommandCore.Abs;
-using ZL.CommandCore.Authorization;
+using ZLAN.Command;
+using ZLAN.Command.Abs;
+using ZLAN.Command.Authorization;
 
 namespace Demo.Web1.Commands
 {

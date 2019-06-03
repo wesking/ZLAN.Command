@@ -6,9 +6,8 @@ using Demo.Web1.Commands;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
-using ZL.CommandCore.Abs;
-using ZL.CommandCore.Authorization;
-using ZL.CommandCore.Cachable;
+using ZLAN.Command.Authorization;
+using ZLAN.Command.Cachable;
 
 namespace Demo.Web1.Controllers
 {

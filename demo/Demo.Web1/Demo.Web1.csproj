@@ -32,7 +32,7 @@
 
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\ZL.CommandCore\ZL.CommandCore.csproj" />
+    <ProjectReference Include="..\..\src\ZLAN.Command\ZLAN.Command.csproj" />
   </ItemGroup>
 
 

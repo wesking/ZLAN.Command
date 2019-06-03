@@ -11,8 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
-using ZL.CommandCore;
-using ZL.CommandCore.Abs;
+using ZLAN.Command;
 
 namespace Demo.Web1
 {

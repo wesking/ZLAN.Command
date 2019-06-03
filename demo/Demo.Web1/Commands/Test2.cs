@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using ZL.CommandCore;
-using ZL.CommandCore.Abs;
+using ZLAN.Command;
+using ZLAN.Command.Abs;
 
 namespace Demo.Web1.Commands
 {
