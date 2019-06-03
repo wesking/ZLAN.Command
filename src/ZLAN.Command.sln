@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.168
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZL.CommandCore", "ZL.CommandCore\ZL.CommandCore.csproj", "{379060E7-5CC2-4DAF-9934-DA521D7A29C9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZLAN.Command", "ZLAN.Command\ZLAN.Command.csproj", "{379060E7-5CC2-4DAF-9934-DA521D7A29C9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZL.CommandCore.Abs", "ZL.CommandCore.Abs\ZL.CommandCore.Abs.csproj", "{8F0E6A54-9A48-4A22-8899-2C0490DA465C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZLAN.Command.Abs", "ZLAN.Command.Abs\ZLAN.Command.Abs.csproj", "{8F0E6A54-9A48-4A22-8899-2C0490DA465C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
