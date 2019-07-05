@@ -1,6 +1,6 @@
-﻿using ZLAN.Command.Abs;
+﻿using System;
 
-namespace ZLAN.Command
+namespace ZLAN.Command.Abs
 {
     /// <summary>
     /// 接口返回结果
@@ -21,6 +21,18 @@ namespace ZLAN.Command
         public T Data { get; set; }
 
         public int Total { get; set; }
+
+        public Exception GetException()
+        {
+            return _exception;
+        }
+
+        public void SetException(Exception ex)
+        {
+            _exception = ex;
+        }
+
+        private Exception _exception = null;
     }
     
 }

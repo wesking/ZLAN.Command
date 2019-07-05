@@ -2,21 +2,20 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
-    <AssemblyVersion>2.0.603.1</AssemblyVersion>
-    <FileVersion>2.0.418.1</FileVersion>
+    <AssemblyVersion>2.0.705</AssemblyVersion>
+    <FileVersion>2.0.705</FileVersion>
     <Authors>wesking</Authors>
     <Company>ZLAN</Company>
-    <Description></Description>
+    <Description>接口封装，支持接口缓存/授权/错误重试</Description>
     <Copyright>©2012-2019 ZLAN. All rights reserved.</Copyright>
     <PackageProjectUrl>https://github.com/wesking/ZLAN.Command</PackageProjectUrl>
     <PackageLicenseUrl>https://opensource.org/licenses/Apache-2.0</PackageLicenseUrl>
-    <Version>2.0.603.1</Version>
+    <Version>2.0.705</Version>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="2.1.4" />
     <PackageReference Include="Z.EntityFramework.Plus.EFCore" Version="1.8.18" />
-    <PackageReference Include="Serilog" Version="2.7.1" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ZLAN.Command.Abs\ZLAN.Command.Abs.csproj" />

@@ -9,6 +9,7 @@ using ZLAN.Command.Abs.Observable;
 using ZLAN.Command.Authorization;
 using ZLAN.Command.Cachable;
 using ZLAN.Command.Data;
+using ZLAN.Command.Logger;
 using ZLAN.Command.Observable;
 
 namespace ZLAN.Command
@@ -27,6 +28,11 @@ namespace ZLAN.Command
             services.AddMemoryCache();
             //设置接口依赖注入
 
+            services.AddScoped<CommandLogger>( );
+            services.AddMvc(mvc =>
+            {
+                mvc.Filters.Add(typeof(CommandLogger));
+            });
 
             services.AddTransient<CommandCacheExecutor>();
 

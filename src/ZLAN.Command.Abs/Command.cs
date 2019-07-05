@@ -1,11 +1,9 @@
 ﻿using Newtonsoft.Json;
-using Serilog;
 using System;
 using System.Diagnostics;
-using ZLAN.Command.Abs;
 using ZLAN.Command.Abs.Observable;
 
-namespace ZLAN.Command
+namespace ZLAN.Command.Abs
 {
     /// <summary>
     /// 命令
@@ -39,18 +37,18 @@ namespace ZLAN.Command
             {
                 MessageContext.Parameter = parameter;
                 MessageContext.Result = result;
-                
+
                 Subject.Instance.Notify(MessageContext);
             }
         }
-        
+
         public IResult<T> Execute(IParameter parameter)
         {
-            var sw = Stopwatch.StartNew();
-            IResult<T> result = PrepareExecute(parameter);
-            if (result == null)
+            IResult<T> result = null;
+            try
             {
-                try
+                result = PrepareExecute(parameter);
+                if (result == null)
                 {
                     result = OnExecute(parameter);
                     if (result.Code == 0)
@@ -58,37 +56,12 @@ namespace ZLAN.Command
                         AfterExecute(parameter, result);
                     }
                 }
-                catch (Exception ex)
-                {
-                    sw.Stop();
-                    Log.Logger
-                        .ForContext("Command", this.GetType().Name)
-                        .ForContext("Elapsed", sw.Elapsed.TotalMilliseconds)
-                        .ForContext("Parameter", JsonConvert.SerializeObject(parameter))
-                        .Error(ex, ex.Message);
-                    return new Result<T> { Code = 4, Message = ex.Message };
-                }
-
             }
-            sw.Stop();
-            
-            if (result.Code != 0)
+            catch (Exception ex)
             {
-                Log.Logger
-                    .ForContext("Command", this.GetType().Name)
-                    .ForContext("Elapsed", sw.Elapsed.TotalMilliseconds)
-                    .ForContext("Parameter", JsonConvert.SerializeObject(parameter))
-                    .Error(JsonConvert.SerializeObject(result));
+                result = new Result<T> { Code = 4, Message = ex.Message };
+                result.SetException(ex);
             }
-            else
-            {
-                Log.Logger
-                    .ForContext("Command", this.GetType().Name)
-                    .ForContext("Elapsed", sw.Elapsed.TotalMilliseconds)
-                    .ForContext("Parameter", JsonConvert.SerializeObject(parameter))
-                    .Information("OK");
-            }
-
             return result;
         }
     }

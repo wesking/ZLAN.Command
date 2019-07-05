@@ -1,4 +1,7 @@
 ﻿
+using Serilog;
+using System;
+
 namespace ZLAN.Command.Abs.Observable
 {
     /// <summary>
@@ -44,8 +47,9 @@ namespace ZLAN.Command.Abs.Observable
                     {
                         obsv.Execute<object>(context);
                     }
-                    catch
+                    catch(Exception ex)
                     {
+                        Log.Error("notify exception", ex);
                         continue;
                     }
                 }

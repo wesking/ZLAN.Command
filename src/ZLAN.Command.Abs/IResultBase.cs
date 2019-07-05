@@ -1,4 +1,6 @@
-﻿namespace ZLAN.Command.Abs
+﻿using System;
+
+namespace ZLAN.Command.Abs
 {
     /// <summary>
     /// 结果
@@ -16,6 +18,9 @@
         /// </summary>
         string Message { get; set; }
 
+        Exception GetException();
+
+        void SetException(Exception ex);
         
     }
     

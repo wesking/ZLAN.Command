@@ -19,7 +19,7 @@ namespace ZLAN.Command.Cachable
     {
         public string Key { get; set; }
 
-
+        private string _cacheContextKey = "cache_attribute_context";
         public override async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
             ServiceContext serviceContext = context.HttpContext.RequestServices.GetService<ServiceContext>();
@@ -53,7 +53,7 @@ namespace ZLAN.Command.Cachable
                 paramHash = BitConverter.ToString(hashBytes).Replace("-", "").ToUpper();
             }
 
-            CacheContext cacheContext = new CacheContext()
+            var cacheContext = new CacheContext()
             {
                 AppCache = appCache,
                 NeedSetCache = true,
@@ -67,40 +67,38 @@ namespace ZLAN.Command.Cachable
                 context.Result = new ObjectResult(result);
                 return;
             }
-
-            concurentDictionary.TryAdd(context.HttpContext.TraceIdentifier, cacheContext);
+            context.HttpContext.Items[_cacheContextKey] = cacheContext;
+            //concurentDictionary.TryAdd(context.HttpContext.TraceIdentifier, cacheContext);
             await next();
         }
 
         public override async Task OnResultExecutionAsync(ResultExecutingContext context, ResultExecutionDelegate next)
         {
-            if (concurentDictionary.ContainsKey(context.HttpContext.TraceIdentifier))
+            if (!context.HttpContext.Items.ContainsKey(context.HttpContext.TraceIdentifier))
             {
-                concurentDictionary.TryRemove(context.HttpContext.TraceIdentifier, out CacheContext cacheContext);
-                Serilog.Log.Information($"ConcurentDictionary length:{concurentDictionary.Keys.Count}");
-                if (!(context.Result is ObjectResult objectResult))
-                {
-                    await next();
-                    return;
-                }
-                if (!(objectResult.Value is IResultBase commandResult))
-                {
-                    await next();
-                    return;
-                }
-
-                if (commandResult.Code == 0)
-                {
-                    IMemoryCache cache = context.HttpContext.RequestServices.GetService<IMemoryCache>();
-
-                    cache.Set(
-                          cacheContext.ParameterKey,
-                          commandResult,
-                          new MemoryCacheEntryOptions().SetAbsoluteExpiration(TimeSpan.FromSeconds((double)cacheContext.AppCache.CacheTime)));
-                }
-
+                await next();
+                return;
+            }
+            if (!(context.Result is ObjectResult objectResult))
+            {
+                await next();
+                return;
+            }
+            if (!(objectResult.Value is IResultBase commandResult))
+            {
+                await next();
+                return;
             }
 
+            if (commandResult.Code == 0)
+            {
+                var cache = context.HttpContext.RequestServices.GetService<IMemoryCache>();
+                var cacheContext = context.HttpContext.Items[_cacheContextKey] as CacheContext;
+                cache.Set(
+                      cacheContext.ParameterKey,
+                      commandResult,
+                      new MemoryCacheEntryOptions().SetAbsoluteExpiration(TimeSpan.FromSeconds((double)cacheContext.AppCache.CacheTime)));
+            }
             await next();
         }
 
@@ -112,6 +110,5 @@ namespace ZLAN.Command.Cachable
 
             public SvrAppCache AppCache { get; set; }
         }
-        private readonly ConcurrentDictionary<string, CacheContext> concurentDictionary = new ConcurrentDictionary<string, CacheContext>();
     }
 }
