@@ -1,11 +1,11 @@
-ZL.CommandCore能为前端提供统一的接口调用，目前支持接口缓存，接口授权
+ZLAN.Command能为前端提供统一的接口调用，目前支持接口缓存，接口授权
 ## 1.添加项目引用
 
 ```
-Install-Package ZL.CommandCore
+Install-Package ZLAN.Command
 ```
 
-## 2.初始化ZL.CommandCore
+## 2.初始化ZLAN.Command
 
 ```
 public void ConfigureServices(IServiceCollection services)
